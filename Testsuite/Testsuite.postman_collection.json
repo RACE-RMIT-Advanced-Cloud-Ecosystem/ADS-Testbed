@@ -1,9 +1,11 @@
 {
 	"info": {
-		"_postman_id": "083d69d0-d820-4c41-a70d-3f8a648ddb9c",
+		"_postman_id": "6b73fd50-129a-4fb8-9ffd-a31d4b47be7a",
 		"name": "Testsuite",
 		"description": "Example deployment of DSC provider to DSC consumer communication",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45519312",
+		"_collection_link": "https://bohancheng.postman.co/workspace/Bohan-Cheng's-Workspace~f3b0aa42-112d-4b7e-8d68-71b6ec2377f1/collection/45519312-6b73fd50-129a-4fb8-9ffd-a31d4b47be7a?action=share&source=collection_link&creator=45519312"
 	},
 	"item": [
 		{
@@ -26,7 +28,8 @@
 											"    pm.expect(pm.collectionVariables.get(\"createdTestOffer\")).to.exist;",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -38,7 +41,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"title\": \"DWD Weather Warnings\",\n  \"description\": \"DWD weather warnings for germany.\",\n  \"keywords\": [\n    \"DWD\"\n  ],\n  \"publisher\": \"https://dwd.com\",\n  \"language\": \"DE\",\n  \"license\": \"\",\n  \"sovereign\": \"https://dwd.com\",\n  \"endpointDocumentation\": \"\",\n  \"paymentModality\": \"undefined\"\n}\n",
+									"raw": "{\n  \"title\": \"ARDC Logo\",\n  \"description\": \"A logo of ARDC\",\n  \"keywords\": [\n    \"ARDC\"\n  ],\n  \"publisher\": \"https://ardc.edu.au\",\n  \"language\": \"EN\",\n  \"license\": \"\",\n  \"sovereign\": \"https://ardc.edu.au\",\n  \"endpointDocumentation\": \"\",\n  \"paymentModality\": \"undefined\"\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -178,7 +181,8 @@
 											"    pm.expect(pm.collectionVariables.get(\"createdTestArtifact\")).to.exist;",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -190,7 +194,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"title\": \"string\",\"description\": \"string\",\"accessUrl\": \"https://maps.dwd.de/geoserver/dwd/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=dwd%3AAutowarn_Analyse&maxFeatures=50&outputFormat=application%2Fjson\", \"automatedDownload\": true}",
+									"raw": "{\"title\": \"ARDC Logo\",\"description\": \"logo from ARDC\",\"accessUrl\": \"https://upload.wikimedia.org/wikipedia/en/thumb/3/3a/Australian_Research_Data_Commons_logo.png/640px-Australian_Research_Data_Commons_logo.png\", \"automatedDownload\": false}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -341,7 +345,8 @@
 											"    pm.expect(pm.collectionVariables.get(\"createdTestContract\")).to.exist;",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -353,7 +358,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"title\": \"TestContract\",\"description\": \"This is an test contract7777\",\"provider\":\"{{APPLICANT_CONNECTOR_URL}}\",\"start\": \"2021-10-22T07:48:37.068Z\",\"end\": \"2023-10-22T07:48:37.068Z\"} ",
+									"raw": "{\"title\": \"RaceCContract\",\"description\": \"This is a contract from RACE\",\"provider\":\"{{APPLICANT_CONNECTOR_URL}}\",\"start\": \"{{CONTRACT_START_DATE}}\",\"end\": \"{{CONTRACT_END_DATE}}\"} ",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -417,7 +422,8 @@
 											"    pm.expect(pm.collectionVariables.get(\"createdTestRepresentation\")).to.exist;",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -429,7 +435,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"title\": \"Example Representation\",\"description\": \"\", \"mediaType\": \"json\", \"language\": \"https://w3id.org/idsa/code/EN\"}",
+									"raw": "{\"title\": \"Representation of ARDC Logo\",\"description\": \"\", \"mediaType\": \"image/png\", \"language\": \"https://w3id.org/idsa/code/EN\"}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -890,7 +896,8 @@
 											"    pm.expect(jsonData[\"@graph\"]).exist;",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								},
 								{
@@ -899,7 +906,8 @@
 										"exec": [
 											""
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -913,7 +921,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{APPLICANT_CONNECTOR_URL}}{{APPLICANT_CONNECTOR_DESCRIPTION_URL}}?recipient={{BROKER}}&elementId=https://localhost/connectors/",
+									"raw": "{{APPLICANT_CONNECTOR_URL}}{{APPLICANT_CONNECTOR_DESCRIPTION_URL}}?recipient={{BROKER}}&elementId=https://broker-reverseproxy/connectors/",
 									"host": [
 										"{{APPLICANT_CONNECTOR_URL}}{{APPLICANT_CONNECTOR_DESCRIPTION_URL}}"
 									],
@@ -924,7 +932,7 @@
 										},
 										{
 											"key": "elementId",
-											"value": "https://localhost/connectors/"
+											"value": "https://broker-reverseproxy/connectors/"
 										}
 									]
 								}
@@ -1348,13 +1356,13 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"USC_02-4\", function () {\r",
-											"    var jsonData = pm.response.json();\r",
-											"    pm.response.to.have.status(200);\r",
-											"    pm.expect(jsonData).exist;\r",
+											"pm.test(\"USC_02-4: Successful retrieves image\", function () {",
+											"    const contentType = pm.response.headers.get('Content-Type')",
+											"    pm.expect(contentType).to.include(\"image\");",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -2067,12 +2075,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{APPLICANT_BROKER_IP}}:81",
-									"protocol": "http",
+									"raw": "{{APPLICANT_BROKER_URL}}",
 									"host": [
-										"{{APPLICANT_BROKER_IP}}"
-									],
-									"port": "81"
+										"{{APPLICANT_BROKER_URL}}"
+									]
 								}
 							},
 							"response": []

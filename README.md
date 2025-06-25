@@ -4,6 +4,14 @@ IDS Testbed is a setup with Open Source IDS components which can be used to ve
 - implements the IDS specifications for establishing connections and communication.
 - and, thus, can work interoperable with all IDS components in the testbed setup.
 
+## Fork Modifications
+
+This repository is a fork of the original [IDS Testbed](https://github.com/International-Data-Spaces-Association/IDS-testbed). We have implemented the following enhancements to improve functionality and reliability:
+
+1. **Fixed Connector Test Suite Failure**: Resolved an issue caused by hard-coded contract start and end dates, ensuring the test suite operates correctly.
+2. **Corrected Broker Test Suite Failure**: Updated the default port configuration to fix connectivity issues in the broker test suite.
+3. **Enhanced Connector Test Suite Data Transfer**: Updated the data transferred in the Connector Test Suite to demonstrate normal operation of the testbed.
+
 ## What is it for?
 
 - Component behaviour testing

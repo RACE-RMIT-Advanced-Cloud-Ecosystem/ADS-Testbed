@@ -15,6 +15,9 @@ services:
       - ./DAPS/keys/TLS/daps.key:/etc/nginx/daps.key
     networks:
       - local
+    depends_on:
+      - omejdn-server
+      - omejdn-ui
 
   omejdn-server:
     image: ghcr.io/fraunhofer-aisec/omejdn-server:${OMEJDN_VERSION}

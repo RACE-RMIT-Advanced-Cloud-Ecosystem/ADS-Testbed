@@ -44,10 +44,10 @@
       "@id" : "idsc:BASE_SECURITY_PROFILE"
     },
     "ids:curator" : {
-      "@id" : "https://sovity.de/"
+      "@id" : "https://rmit.edu.au/"
     },
     "ids:maintainer" : {
-      "@id" : "https://sovity.de/"
+      "@id" : "https://rmit.edu.au/"
     }
   },
   "ids:trustStore" : {

@@ -159,6 +159,8 @@ services:
     container_name: broker-core
     volumes:
       - ./MetadataBroker/isstbroker-keystore.jks:/etc/cert/isstbroker-keystore.jks
+      - ./DAPS/keys/TLS/daps.cert:/opt/java/openjdk/lib/security/daps.crt
+      - ./MetadataBroker/run.sh:/run.sh:ro
     environment:
       - SPARQL_ENDPOINT=http://broker-fuseki:3030/connectorData
       - ELASTICSEARCH_HOSTNAME=broker-elasticsearch

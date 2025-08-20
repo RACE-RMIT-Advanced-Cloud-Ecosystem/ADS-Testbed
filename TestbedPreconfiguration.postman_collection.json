@@ -1196,7 +1196,7 @@
 										"method": "POST",
 										"header": [],
 										"url": {
-											"raw": "{{CONNECTORB_URL}}/api/ids/description?recipient={{CONNECTORA_URL}}/api/ids/data&elementId={{Provider_catalog}}",
+											"raw": "{{CONNECTORB_URL}}/api/ids/description?recipient={{Recipient_url}}&elementId={{Provider_catalog}}",
 											"host": [
 												"{{CONNECTORB_URL}}"
 											],
@@ -1208,7 +1208,7 @@
 											"query": [
 												{
 													"key": "recipient",
-													"value": "{{CONNECTORA_URL}}/api/ids/data"
+													"value": "{{Recipient_url}}"
 												},
 												{
 													"key": "elementId",

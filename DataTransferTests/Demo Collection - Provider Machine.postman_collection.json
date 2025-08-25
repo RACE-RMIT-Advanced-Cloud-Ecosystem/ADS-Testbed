@@ -678,7 +678,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{PROVIDER_CONNECTOR_URL}}{{PROVIDER_CONNECTOR_DESCRIPTION_URL}}?recipient={{BROKER}}&elementId=https://broker-reverseproxy/connectors/",
+					"raw": "{{PROVIDER_CONNECTOR_URL}}{{PROVIDER_CONNECTOR_DESCRIPTION_URL}}?recipient={{BROKER}}&elementId={{BROKER_REVERSEPROXY}}/connectors/",
 					"host": [
 						"{{PROVIDER_CONNECTOR_URL}}{{PROVIDER_CONNECTOR_DESCRIPTION_URL}}"
 					],
@@ -689,7 +689,7 @@
 						},
 						{
 							"key": "elementId",
-							"value": "https://broker-reverseproxy/connectors/"
+							"value": "{{BROKER_REVERSEPROXY}}/connectors/"
 						}
 					]
 				}
@@ -846,8 +846,12 @@
 			"value": "{{PROVIDER_FIRST_LEVEL_RESOURCE_NAME}}{{PROVIDER_CONNECTOR_REPRESENTATIONS_RESOURCE}}"
 		},
 		{
+			"key": "BROKER_REVERSEPROXY",
+			"value": "https://broker-reverseproxy"
+		},
+		{
 			"key": "BROKER",
-			"value": "https://broker-reverseproxy/infrastructure"
+			"value": "{{BROKER_REVERSEPROXY}}/infrastructure"
 		},
 		{
 			"key": "CONTRACT_START_DATE",

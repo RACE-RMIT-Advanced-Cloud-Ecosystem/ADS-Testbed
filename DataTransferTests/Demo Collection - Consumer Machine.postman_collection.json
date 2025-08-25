@@ -153,7 +153,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{CONSUMER_CONNECTOR_URL}}{{CONSUMER_CONNECTOR_DESCRIPTION_URL}}?recipient={{BROKER}}&elementId=https://broker-reverseproxy/connectors/",
+					"raw": "{{CONSUMER_CONNECTOR_URL}}{{CONSUMER_CONNECTOR_DESCRIPTION_URL}}?recipient={{BROKER}}&elementId={{BROKER_REVERSEPROXY}}/connectors/",
 					"host": [
 						"{{CONSUMER_CONNECTOR_URL}}{{CONSUMER_CONNECTOR_DESCRIPTION_URL}}"
 					],
@@ -164,7 +164,7 @@
 						},
 						{
 							"key": "elementId",
-							"value": "https://broker-reverseproxy/connectors/"
+							"value": "{{BROKER_REVERSEPROXY}}/connectors/"
 						}
 					]
 				}
@@ -435,8 +435,12 @@
 			"value": "{{CONSUMER_FIRST_LEVEL_RESOURCE_NAME}}{{CONSUMER_IDS_RESOURCE_NAME}}{{CONSUMER_DESCRIPTION_RESOURCE_NAME}}"
 		},
 		{
+			"key": "BROKER_REVERSEPROXY",
+			"value": "https://broker-reverseproxy"
+		},
+		{
 			"key": "BROKER",
-			"value": "https://broker-reverseproxy/infrastructure"
+			"value": "{{BROKER_REVERSEPROXY}}/infrastructure"
 		},
 		{
 			"key": "sendingUsagePolicyResource",

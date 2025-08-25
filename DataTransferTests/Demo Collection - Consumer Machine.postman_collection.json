@@ -1,0 +1,470 @@
+{
+	"info": {
+		"_postman_id": "68f7d7ab-4efe-43c7-933a-90b5e42147ac",
+		"name": "Demo Collection - Consumer Machine",
+		"description": "Demo for dataspace cross-machine communication - consumer side",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List of Consumer's artifacts at beginning",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Can get Consumer's Artifacts\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{CONSUMER_CONNECTOR_URL}}/api/artifacts",
+					"host": [
+						"{{CONSUMER_CONNECTOR_URL}}"
+					],
+					"path": [
+						"api",
+						"artifacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Consumer at Metadata broker",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {},
+				"strictSSL": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CONSUMER_CONNECTOR_URL}}/api/ids/connector/update?recipient={{BROKER}}",
+					"host": [
+						"{{CONSUMER_CONNECTOR_URL}}"
+					],
+					"path": [
+						"api",
+						"ids",
+						"connector",
+						"update"
+					],
+					"query": [
+						{
+							"key": "recipient",
+							"value": "{{BROKER}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Browse Metadata broker for catalogs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"BRK_01\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(jsonData[\"@graph\"]).exist;",
+							"    ",
+							"    // Find connector object with matching sameAs",
+							"    var graph = jsonData[\"@graph\"];",
+							"    var providerConnectorId = pm.collectionVariables.get(\"PROVIDER_CONNECTOR_ID\");",
+							"    var connectorObj = graph.find(obj => obj.sameAs === providerConnectorId);",
+							"    ",
+							"    if (connectorObj) {",
+							"        // Extract catalogToBrowse",
+							"        var resourceCatalog = connectorObj.resourceCatalog;",
+							"        var catalogId = Array.isArray(resourceCatalog) ? resourceCatalog[0] : resourceCatalog;",
+							"        var catalogObj = graph.find(obj => obj[\"@id\"] === catalogId);",
+							"        if (catalogObj && catalogObj.sameAs) {",
+							"            pm.collectionVariables.set(\"catalogToBrowse\", catalogObj.sameAs);",
+							"        }",
+							"        ",
+							"        // Extract providerConnectorEndpoint",
+							"        var hasDefaultEndpoint = connectorObj.hasDefaultEndpoint;",
+							"        if (typeof hasDefaultEndpoint === 'string') {",
+							"            var endpointObj = graph.find(obj => obj[\"@id\"] === hasDefaultEndpoint);",
+							"            if (endpointObj && endpointObj.accessURL) {",
+							"                var accessURL = Array.isArray(endpointObj.accessURL) ? endpointObj.accessURL[0] : endpointObj.accessURL;",
+							"                pm.collectionVariables.set(\"providerConnectorEndpoint\", accessURL);",
+							"            }",
+							"        }",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"tlsDisabledProtocols": [
+					"TLSv1",
+					"TLSv1_1"
+				]
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{CONSUMER_CONNECTOR_URL}}{{CONSUMER_CONNECTOR_DESCRIPTION_URL}}?recipient={{BROKER}}&elementId=https://broker-reverseproxy/connectors/",
+					"host": [
+						"{{CONSUMER_CONNECTOR_URL}}{{CONSUMER_CONNECTOR_DESCRIPTION_URL}}"
+					],
+					"query": [
+						{
+							"key": "recipient",
+							"value": "{{BROKER}}"
+						},
+						{
+							"key": "elementId",
+							"value": "https://broker-reverseproxy/connectors/"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Browse target catalog for artifacts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"USC_02-1\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    const sendingUsagePolicyResource = jsonData[\"ids:offeredResource\"][0][\"@id\"];",
+							"    const sendingUsagePolicyArtifact = jsonData[\"ids:offeredResource\"][0][\"ids:representation\"][0][\"ids:instance\"][0][\"@id\"];",
+							"    const sendingUsagePolicyRule = JSON.stringify([{...jsonData[\"ids:offeredResource\"][0][\"ids:contractOffer\"][0]['ids:permission'][0], \"ids:target\": sendingUsagePolicyArtifact}], null, 2);",
+							"    pm.collectionVariables.set(\"sendingUsagePolicyResource\", sendingUsagePolicyResource);",
+							"    pm.collectionVariables.set(\"sendingUsagePolicyArtifact\", sendingUsagePolicyArtifact);",
+							"    pm.collectionVariables.set(\"sendingUsagePolicyRule\", sendingUsagePolicyRule);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{CONSUMER_CONNECTOR_URL}}/api/ids/description?recipient={{providerConnectorEndpoint}}&elementId={{catalogToBrowse}}",
+					"host": [
+						"{{CONSUMER_CONNECTOR_URL}}"
+					],
+					"path": [
+						"api",
+						"ids",
+						"description"
+					],
+					"query": [
+						{
+							"key": "recipient",
+							"value": "{{providerConnectorEndpoint}}"
+						},
+						{
+							"key": "elementId",
+							"value": "{{catalogToBrowse}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request to access artifact from provider",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"USC_02-2\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var consumerAgreementLong = jsonData[\"_links\"][\"self\"][\"href\"];",
+							"    var consumerAgreementId = consumerAgreementLong.split('/').pop();",
+							"    pm.collectionVariables.set(\"consumerAgreementId\", consumerAgreementId);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{sendingUsagePolicyRule}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CONSUMER_CONNECTOR_URL}}/api/ids/contract?recipient={{providerConnectorEndpoint}}&resourceIds={{sendingUsagePolicyResource}}&artifactIds={{sendingUsagePolicyArtifact}}&download=false",
+					"host": [
+						"{{CONSUMER_CONNECTOR_URL}}"
+					],
+					"path": [
+						"api",
+						"ids",
+						"contract"
+					],
+					"query": [
+						{
+							"key": "recipient",
+							"value": "{{providerConnectorEndpoint}}"
+						},
+						{
+							"key": "resourceIds",
+							"value": "{{sendingUsagePolicyResource}}"
+						},
+						{
+							"key": "artifactIds",
+							"value": "{{sendingUsagePolicyArtifact}}"
+						},
+						{
+							"key": "download",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signed agreement",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"USC_02-3\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(jsonData).exist;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{CONSUMER_CONNECTOR_URL}}/api/agreements/{{consumerAgreementId}}",
+					"host": [
+						"{{CONSUMER_CONNECTOR_URL}}"
+					],
+					"path": [
+						"api",
+						"agreements",
+						"{{consumerAgreementId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List of Consumer's artifacts after transaction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Can get Consumer's Artifacts\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{CONSUMER_CONNECTOR_URL}}/api/artifacts",
+					"host": [
+						"{{CONSUMER_CONNECTOR_URL}}"
+					],
+					"path": [
+						"api",
+						"artifacts"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "password",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "PROVIDER_CONNECTOR_ID",
+			"value": "https://connector_A"
+		},
+		{
+			"key": "CONSUMER_CONNECTOR_IP",
+			"value": "127.0.0.1"
+		},
+		{
+			"key": "CONSUMER_CONNECTOR_PORT",
+			"value": "8081"
+		},
+		{
+			"key": "CONSUMER_CONNECTOR_PROTOCOL",
+			"value": "https"
+		},
+		{
+			"key": "CONSUMER_CONNECTOR_URL",
+			"value": "{{CONSUMER_CONNECTOR_PROTOCOL}}://{{CONSUMER_CONNECTOR_IP}}:{{CONSUMER_CONNECTOR_PORT}}"
+		},
+		{
+			"key": "CONSUMER_FIRST_LEVEL_RESOURCE_NAME",
+			"value": "/api"
+		},
+		{
+			"key": "CONSUMER_IDS_RESOURCE_NAME",
+			"value": "/ids"
+		},
+		{
+			"key": "CONSUMER_DATA_RESOURCE_NAME",
+			"value": "/data"
+		},
+		{
+			"key": "CONSUMER_DESCRIPTION_RESOURCE_NAME",
+			"value": "/description"
+		},
+		{
+			"key": "CONSUMER_CONNECTOR_DESCRIPTION_URL",
+			"value": "{{CONSUMER_FIRST_LEVEL_RESOURCE_NAME}}{{CONSUMER_IDS_RESOURCE_NAME}}{{CONSUMER_DESCRIPTION_RESOURCE_NAME}}"
+		},
+		{
+			"key": "BROKER",
+			"value": "https://broker-reverseproxy/infrastructure"
+		},
+		{
+			"key": "sendingUsagePolicyResource",
+			"value": ""
+		},
+		{
+			"key": "sendingUsagePolicyArtifact",
+			"value": ""
+		},
+		{
+			"key": "sendingUsagePolicyRule",
+			"value": ""
+		},
+		{
+			"key": "consumerAgreementId",
+			"value": ""
+		},
+		{
+			"key": "requestedData",
+			"value": ""
+		},
+		{
+			"key": "catalogToBrowse",
+			"value": ""
+		},
+		{
+			"key": "providerConnectorEndpoint",
+			"value": ""
+		}
+	]
+}

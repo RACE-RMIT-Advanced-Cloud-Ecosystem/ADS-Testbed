@@ -358,7 +358,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"title\": \"RaceCContract\",\"description\": \"This is a contract from RACE\",\"provider\":\"{{APPLICANT_CONNECTOR_URL}}\",\"start\": \"{{CONTRACT_START_DATE}}\",\"end\": \"{{CONTRACT_END_DATE}}\"} ",
+									"raw": "{\"title\": \"RaceContract\",\"description\": \"This is a contract from RACE\",\"provider\":\"{{APPLICANT_CONNECTOR_URL}}\",\"start\": \"{{CONTRACT_START_DATE}}\",\"end\": \"{{CONTRACT_END_DATE}}\"} ",
 									"options": {
 										"raw": {
 											"language": "json"

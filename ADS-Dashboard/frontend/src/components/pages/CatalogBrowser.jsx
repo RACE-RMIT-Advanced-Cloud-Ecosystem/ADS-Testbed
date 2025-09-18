@@ -66,7 +66,7 @@ function CatalogBrowser() {
     
     useEffect(() => {
         setBrokersMapping(brokers.reduce((acc, b) => {
-            acc[b.location] = b.title
+            acc[b.title] = b.location
             return acc
         }, {}))
         setFilters([...baseFilters, ...brokers.map(b => b.title)])
@@ -78,12 +78,33 @@ function CatalogBrowser() {
             return;
         }
 
-        const brokerUrl = brokersMapping[appliedFilter] || 'https://broker-reverseproxy/infrastructure'
-        
+        // DELETE - SKIP RDA
+        if (appliedFilter === 'RDA') {
+            setSearchResults([]);
+            return;
+        }
+
         try {
-            const results = await brokerSearch(brokerUrl, query, 'keyword', signal);
-            if (!signal?.aborted) {
-                setSearchResults(results);
+            if (appliedFilter === 'All brokers') {
+                const allResults = await Promise.allSettled(
+                    Object.values(brokersMapping).map(brokerUrl => 
+                        brokerSearch(brokerUrl, query, 'keyword', signal)
+                    )
+                );
+                
+                const combinedResults = allResults
+                    .filter(result => result.status === 'fulfilled')
+                    .flatMap(result => result.value || []);
+                
+                if (!signal?.aborted) {
+                    setSearchResults(combinedResults);
+                }
+            } else {
+                const brokerUrl = brokersMapping[appliedFilter] || 'https://broker-reverseproxy/infrastructure';
+                const results = await brokerSearch(brokerUrl, query, 'keyword', signal);
+                if (!signal?.aborted) {
+                    setSearchResults(results);
+                }
             }
         } catch (error) {
             if (error.name !== 'AbortError' && !signal?.aborted) {

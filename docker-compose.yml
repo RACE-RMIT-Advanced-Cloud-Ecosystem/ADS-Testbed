@@ -13,6 +13,8 @@ services:
       - ./DAPS/nginx.conf:/etc/nginx/templates/default.conf.template
       - ./DAPS/keys/TLS/daps.cert:/etc/nginx/daps.cert
       - ./DAPS/keys/TLS/daps.key:/etc/nginx/daps.key
+      - ./MetadataBroker/server.crt:/etc/nginx/broker.cert
+      - ./MetadataBroker/server.key:/etc/nginx/broker.key
     networks:
       - local
     depends_on:

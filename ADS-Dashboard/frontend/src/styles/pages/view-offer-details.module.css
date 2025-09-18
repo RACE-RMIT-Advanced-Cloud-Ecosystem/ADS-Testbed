@@ -1,0 +1,7 @@
+.section {
+    gap: unset !important;
+}
+
+.sub-section {
+    padding-left: 20px;
+}

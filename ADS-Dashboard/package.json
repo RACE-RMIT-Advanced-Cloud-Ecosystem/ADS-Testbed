@@ -1,0 +1,9 @@
+{
+  "name": "dataspace-dashboard",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "pnpm run -r --parallel dev",
+    "start": "pnpm run --filter backend start",
+    "build": "pnpm run --filter frontend build"
+  }
+}

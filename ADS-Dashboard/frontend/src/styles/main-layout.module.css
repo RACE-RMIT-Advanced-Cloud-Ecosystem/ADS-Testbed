@@ -1,0 +1,19 @@
+.main-layout {
+    width: 100dvw;
+    height: 100dvh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: var(--bg-light);
+}
+
+.main {
+    width: calc(100% - var(--left-nav-width));
+    height: 100%;
+    overflow: auto;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    padding: 40px;
+}

@@ -1,0 +1,172 @@
+.top-menu {
+
+    --top-menu-padding: 10px;
+    --component-height: calc(var(--top-menu-height) - (var(--top-menu-padding) * 2));
+
+    width: 100%;
+    height: var(--top-menu-height);
+    padding: var(--top-menu-padding);
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    background-color: transparent;
+    gap: 15px;
+}
+
+.refresh-btn {
+    height: var(--component-height);
+    width: var(--component-height);
+    color: var(--text-medium);
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid var(--shadow-medium);
+    transition-duration: .3s;
+    background-color: white;
+}
+
+.refresh-btn:hover {
+    background-color: var(--ardc-gray);
+}
+
+.refresh-btn svg {
+    margin: auto;
+    --size: 50%;
+    height: var(--size);
+    width: var(--size);
+}
+
+.connector-selector {
+    --input-width: 200px;
+}
+
+.status-indicator {
+    min-width: 140px;
+    height: var(--component-height);
+    border: 1px solid var(--shadow-medium);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    transition: transform .3s, box-shadow .3s;
+    font-size: .9em;
+    box-shadow: 3px 3px 7px var(--shadow-medium);
+    background-color: white;
+    user-select: none;
+}
+
+.status-indicator:hover {
+    box-shadow: 3px 3px 7px lightgray;
+}
+
+.status-indicator.active {
+    background: #EDE7F2;
+    color: var(--ardc-purple);
+    border-color: var(--ardc-purple);
+}
+
+.status-indicator > .expand-indicator {
+    transition-duration: .2s;
+}
+
+.status-indicator.active > .expand-indicator {
+    transform: rotate(180deg);
+}
+
+.status-indicator > * {
+    margin: auto;
+}
+
+
+.status-indicator .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.status-indicator .indicator.connected { background-color: limegreen; }
+.status-indicator .indicator.disconnected { background-color: red; }
+
+.status-panel {
+    min-width: 350px;
+    min-height: 100px;
+    position: absolute;
+    right: 10px;
+    top: 60px;
+    background-color: white;
+    border: 1px solid var(--shadow-medium);
+    border-radius: 10px;
+    z-index: 2;
+    box-shadow: 3px 3px 7px var(--shadow-medium);
+    transform: scaleY(0);
+    transform-origin: top center;
+    opacity: 0;
+    transition-duration: .3s;
+}
+
+.status-panel.active {
+    transform: scaleY(1);
+    opacity: 1;
+}
+
+.status-panel .title-part {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid lightgray;
+}
+
+.status-panel .title-part > * {
+    margin: auto;
+}
+
+.status-panel .title-part .title {
+    font-weight: bold;
+    color: rgba(0,0,0,0.8);
+    margin-left: 0;
+}
+
+.status-panel .title-part .close-btn {
+    margin-right: 0;
+    --size: 25px;
+    height: var(--size);
+    width: var(--size);
+    color: gray;
+}
+
+.status-panel .status-part {
+    padding: 20px;
+    width: 100%;
+}
+
+.status-panel .status-part .row {
+    display: block;
+    padding: 5px 0px;
+    display: flex;
+    font-size: .9em;
+    margin-bottom: 5px;
+}
+
+.status-panel .status-part .row > * {
+    margin: auto;
+}
+
+.status-panel .status-part .row .label { 
+    margin-left: 0;
+    padding-right: 20px;
+    color: rgba(0,0,0,0.6);
+}
+.status-panel .status-part .row .value { 
+    margin-right: 0; 
+    color: rgba(0,0,0,0.9);
+}
+
+.status-panel .status-part .row .value.connected { color: limegreen; }
+.status-panel .status-part .row .value.disconnected { color: red; }

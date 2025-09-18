@@ -184,10 +184,23 @@ services:
     networks:
       - local
 
+  dashboard:
+    build: ./ADS-Dashboard
+    container_name: dashboard
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - dashboard-data:/app/data
+    networks:
+      - local
+    ports:
+      - 3031:3031
+
 volumes:
   broker-fuseki: {}
   connector-dataa: {}
   connector-datab: {}
+  dashboard-data: {}
 
 networks:
   local:

@@ -1,0 +1,6 @@
+data/*.json
+node_modules
+*.db
+.env.*
+uploads/
+dist

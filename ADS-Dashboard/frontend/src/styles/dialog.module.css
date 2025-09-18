@@ -1,0 +1,237 @@
+.dialog {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    border: none;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+}
+
+.dialog:not([open]) {
+    display: none;
+}
+
+.dialog[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog > .main {
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 7px;
+    background-color: var(--bg-light);
+    min-width: 500px;
+    min-height: 300px;
+    max-width: 80dvw;
+    max-height: 80dvh;
+    overflow: hidden;
+    box-shadow: 0 10px 20px var(--shadow-dark);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dialog > .main .section {
+    display: flex;
+    gap: 20px;
+}
+
+.dialog > .main .section.vertical {
+    flex-direction: column;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-light);
+}
+.dialog > .main .section.vertical:last-child { border-bottom: none; padding-bottom: unset; }
+
+.dialog > .main .section.horizontal,
+.dialog > .main .section.horizontal-reverse {
+    flex-direction: row;
+    padding-right: 10px;
+    border-right: 1px solid var(--border-light);
+}
+.dialog > .main .section.horizontal:last-child,
+.dialog > .main .section.horizontal-reverse:last-child { border-right: none; padding-right: unset; }
+
+.dialog > .main .section.horizontal-reverse {
+    flex-direction: row-reverse;
+}
+
+.dialog > .main.small {
+    width: 500px;
+    height: 300px;
+}
+
+.dialog > .main.medium {
+    width: 50dvw;
+    height: 50dvh;
+}
+
+.dialog > .main.large {
+    width: 80dvw;
+    height: 80dvh;
+}
+
+.dialog > main.auto {
+    width: fit-content;
+    height: fit-content;
+}
+
+.header {
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.header .title {
+    font-size: 1.3em;
+    font-weight: bold;
+    padding: 0 5px 20px 5px;
+}
+
+.header .close-btn {
+    position: absolute;
+    right: 5px;
+    top: 0;
+    color: var(--text-medium);
+    --icon-size: 20px;
+    height: var(--icon-size);
+    width: var(--icon-size);
+    transition: color .3s;
+}
+.header .close-btn:hover {
+    color: var(--text-dark);
+}
+
+.body {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
+
+.buttons-on-bottom {
+    margin-top: auto;
+}
+
+.view-section {
+    width: 100%;
+    border: 2px solid var(--theme-color);
+    border-radius: 10px;
+    padding: 20px;
+    height: fit-content;
+    background: color-mix(in srgb, var(--theme-color) 5%, white);
+    margin-top: 10px;
+    transition: transform .3s, box-shadow .3s;
+}
+
+.view-section.non-base:not(:first-child) {
+    margin-top: 20px;
+}
+
+.view-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px color-mix(in srgb, var(--theme-color) 15%, white);
+}
+
+.view-section .tag {
+    font-weight: bold;
+    font-size: .9em;
+    border: 1px solid color-mix(in srgb, var(--theme-color) 20%, white);
+}
+
+.view-component.title {
+    font-weight: 800;
+    font-size: 1.2em;
+}
+.view-component {
+    margin-bottom: 20px;
+    max-width: 100%;
+}
+.view-component.closer {
+    margin-bottom: 10px;
+}
+.view-component.independent {
+    margin-bottom: 0px;
+}
+.view-component.further {
+    margin-top: 10px;
+}
+
+.view-component svg {
+    color: var(--theme-color);
+}
+
+.view-component.small {
+    font-size: .8em;
+}
+
+.view-component.coloured {
+    color: var(--theme-color);
+}
+
+.view-component.full-width {
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.view-component.key-value > :not(svg):first-of-type {
+    color: var(--text-dark);
+}
+.view-component.key-value > :not(svg):last-of-type {
+    color: var(--theme-color);
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.view-component.light {
+    color: var(--text-light);
+}
+
+.view-component.seprate > * {
+    position: relative;
+    margin-right: 10px;
+}
+.view-component.seprate > *:not(:last-child)::after {
+    position: absolute;
+    content: "";
+    height: 100%;
+    top: 0;
+    right: -10px;
+    width: 2px;
+    background-color: var(--theme-color);
+}
+.view-component.centered {
+    text-align: center;
+}
+
+.view-multi-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+    border: 2px solid var(--text-dark);
+    border-radius: 10px;
+    height: fit-content;
+}
+
+.view-multi-section .body {
+    height: fit-content;
+}
+.view-multi-section .header {
+    padding-bottom: 10px;
+}
+.view-multi-section .header .title {
+    padding: unset;
+}
+.view-multi-section .header .icon > svg {
+    --icon-size: 30px;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    color: var(--theme-color);
+}

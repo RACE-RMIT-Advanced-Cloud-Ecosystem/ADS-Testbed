@@ -1,0 +1,34 @@
+.file-info,
+.empty-file {
+    color: var(--ardc-purple);
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    min-height: 35px;
+}
+
+.empty-file {
+    text-align: center;
+    align-content: center;
+}
+
+.file-info {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.file-info .filename {
+    font-weight: 800;
+    font-size: 1.1em;
+}
+
+.file-info .filetype {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid;
+    width: fit-content;
+}
+
+.file-info > * {
+    margin-top: 5px;
+}

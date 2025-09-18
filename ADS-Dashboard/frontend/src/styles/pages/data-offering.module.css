@@ -1,0 +1,10 @@
+.resources-table th,
+.resources-table td{
+    max-width: 300px;
+}
+
+.keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}

@@ -13,6 +13,8 @@ import { FaDownload } from "react-icons/fa";
 import { FaCalendarPlus } from "react-icons/fa6";
 import { getEntityId } from '../../utils/tools';
 
+import s from "@styles/dialogs/index.module.css";
+
 function SingleArtifact({ props, base = false }) {
     const { openDialog } = useDialog();
     const dateFormattor = useDate();
@@ -23,14 +25,12 @@ function SingleArtifact({ props, base = false }) {
     useEffect(() => {
         if (!props) return;
         setDataUrl(urlParser(props._links.data.href));
+        setShowDownloadingIndicator(false);
     }, [props, urlParser])
 
     const startDownloading = useCallback(event => {
         event.stopPropagation();
         setShowDownloadingIndicator(true);
-        setTimeout(() => {
-            setShowDownloadingIndicator(false);
-        }, 5000);
     }, [])
 
     
@@ -47,10 +47,15 @@ function SingleArtifact({ props, base = false }) {
             <ViewComponent fullWidth light further>{ props?.description }</ViewComponent>
 
             <ViewComponent small further coloured>{ getEntityId(props?._links?.self?.href) }</ViewComponent>
-            <BasicButton icon={<FaDownload />} text="Download" variation='theme' link download href={dataUrl} onClick={startDownloading} />
+            <BasicButton 
+                className={s['fixed-size-btn']} 
+                icon={showDownloadingIndicator ? <div className={s['download-indicator']} /> : <FaDownload />} 
+                text={showDownloadingIndicator ? undefined : "Download"} variation='theme' link download 
+                href={dataUrl} onClick={startDownloading} 
+            />
             {
                 showDownloadingIndicator &&
-                <ViewComponent small further closer coloured>Download started, it might take a while depends on data size!</ViewComponent>
+                <ViewComponent further closer coloured>Your data is being retrieved from the provider. The download will start once the data has been completely transferred. Please stay on this page...</ViewComponent>
             }
         </ViewSection>
     )

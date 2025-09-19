@@ -15,7 +15,7 @@ function BasicButton({
             {...props}
         >
             {icon}
-            <span>{text}</span>
+            {text && <span>{text}</span>}
         </Component>
     );
 }

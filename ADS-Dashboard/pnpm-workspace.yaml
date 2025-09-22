@@ -1,7 +1,0 @@
-packages:
-  - frontend
-  - backend
-
-onlyBuiltDependencies:
-  - esbuild
-  - sqlite3

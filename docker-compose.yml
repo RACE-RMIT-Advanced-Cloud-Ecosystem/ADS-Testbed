@@ -187,7 +187,7 @@ services:
       - local
 
   dashboard:
-    build: ./ADS-Dashboard
+    image: public.ecr.aws/g3a7j6g7/race-rmit-advanced-cloud-ecosystem_ads-dashboard:latest
     container_name: dashboard
     environment:
       - NODE_ENV=production

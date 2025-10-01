@@ -191,13 +191,6 @@ add_connector() {
     if [ ! -f "$ROOT_DIR/CertificateAuthority/pkiInput/${CONNECTOR_NAME}.json" ]; then
         echo "Creating configuration file for $CONNECTOR_NAME"
         
-        # Build hosts array with optional IP
-        HOSTS_JSON="[\n    \"localhost\",\n    \"${CONNECTOR_NAME,,}\",\n    \"127.0.0.1\""
-        if [ -n "$CONNECTOR_IP" ]; then
-            HOSTS_JSON="${HOSTS_JSON},\n    \"${CONNECTOR_IP}\""
-        fi
-        HOSTS_JSON="${HOSTS_JSON}\n  ]"
-        
         cat > "$ROOT_DIR/CertificateAuthority/pkiInput/${CONNECTOR_NAME}.json" <<EOF
 {
   "CN": "Connector ${CONNECTOR_NAME^^}",
@@ -216,7 +209,8 @@ add_connector() {
   "hosts": [
     "localhost",
     "${CONNECTOR_NAME,,}",
-    "127.0.0.1"$([ -n "$CONNECTOR_IP" ] && echo ",\n    \"$CONNECTOR_IP\"")
+    "127.0.0.1"$([ -n "$CONNECTOR_IP" ] && echo ",")
+    $([ -n "$CONNECTOR_IP" ] && echo "\"$CONNECTOR_IP\"")
   ]
 }
 EOF

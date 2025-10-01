@@ -187,7 +187,7 @@ services:
       - local
 
   dashboard:
-    image: public.ecr.aws/g3a7j6g7/race-rmit-advanced-cloud-ecosystem_ads-dashboard:latest
+    image: public.ecr.aws/ads-poc/race-rmit-advanced-cloud-ecosystem_ads-dashboard
     container_name: dashboard
     environment:
       - NODE_ENV=production
@@ -195,8 +195,17 @@ services:
       - dashboard-data:/app/data
     networks:
       - local
-    ports:
-      - 3031:3031
+
+  rda-broker:
+    image: public.ecr.aws/ads-poc/race-rmit-advanced-cloud-ecosystem_rda-broker:latest
+    container_name: rda-broker
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./MetadataBroker/server.crt:/app/keys/certificate.crt
+      - ./MetadataBroker/server.key:/app/keys/private-key.pem
+    networks:
+      - local
 
 volumes:
   broker-fuseki: {}

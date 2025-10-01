@@ -155,10 +155,10 @@ create_truststores() {
 
 # Function: Register with DAPS
 register_daps() {
+    cd $ROOT_DIR/DAPS
     case "$MODE" in
         full)
             echo "Registering clients with DAPS..."
-            cd $ROOT_DIR/DAPS
             rm -f keys/clients/*.cert
             echo "---" > config/clients.yml
 
@@ -234,21 +234,21 @@ EOF
     CERT_DIR="$ROOT_DIR/Certificates-${CONNECTOR_NAME}"
     mkdir -p "$CERT_DIR"
     
-    cp "${CONNECTOR_NAME}.p12" "$CERT_DIR/"
-    cp "${CONNECTOR_NAME}.cert" "$CERT_DIR/"
-    cp "${CONNECTOR_NAME}.crt" "$CERT_DIR/"
-    cp "${CONNECTOR_NAME}.key" "$CERT_DIR/"
-    cp "${CONNECTOR_NAME}.pem" "$CERT_DIR/"
+    cp "${CONNECTOR_NAME}.p12" "$CERT_DIR/connector.p12"
+    cp "${CONNECTOR_NAME}.cert" "$CERT_DIR/connector.cert"
+    cp "${CONNECTOR_NAME}.crt" "$CERT_DIR/connector.crt"
+    cp "${CONNECTOR_NAME}.key" "$CERT_DIR/connector.key"
+    cp "${CONNECTOR_NAME}.pem" "$CERT_DIR/connector.pem"
     
     # Create truststore in certificate directory
     keytool -import -alias testbedca -file "$ROOT_DIR/CertificateAuthority/$SSL_DIR/ca/ca.crt" -storetype PKCS12 -keystore "$CERT_DIR/truststore.p12" -storepass password -noprompt
     keytool -import -alias testbedsubca -file "$ROOT_DIR/CertificateAuthority/$SSL_DIR/subca/subca.crt" -storetype PKCS12 -keystore "$CERT_DIR/truststore.p12" -storepass password -noprompt
 
-    chmod 666 "$CERT_DIR/${CONNECTOR_NAME}.p12"
-    chmod 666 "$CERT_DIR/${CONNECTOR_NAME}.cert"
-    chmod 666 "$CERT_DIR/${CONNECTOR_NAME}.crt"
-    chmod 666 "$CERT_DIR/${CONNECTOR_NAME}.key"
-    chmod 666 "$CERT_DIR/${CONNECTOR_NAME}.pem"
+    chmod 666 "$CERT_DIR/connector.p12"
+    chmod 666 "$CERT_DIR/connector.cert"
+    chmod 666 "$CERT_DIR/connector.crt"
+    chmod 666 "$CERT_DIR/connector.key"
+    chmod 666 "$CERT_DIR/connector.pem"
     chmod 666 "$CERT_DIR/truststore.p12"
     
     # Copy certificate to DAPS for registration
@@ -356,4 +356,4 @@ case "$MODE" in
         ;;
 esac
 
-echo "Operation completed. You can restart containers with: sudo docker compose down -v && sudo docker compose up -d"
+echo "Operation completed. You can restart containers with: sudo docker compose down && sudo docker compose up -d"

@@ -155,13 +155,13 @@ create_truststores() {
 
 # Function: Register with DAPS
 register_daps() {
-    echo "Registering clients with DAPS..."
-    cd $ROOT_DIR/DAPS
-    rm -f keys/clients/*.cert
-    echo "---" > config/clients.yml
-    
     case "$MODE" in
         full)
+            echo "Registering clients with DAPS..."
+            cd $ROOT_DIR/DAPS
+            rm -f keys/clients/*.cert
+            echo "---" > config/clients.yml
+
             sh ./register_connector.sh broker
             sh ./register_connector.sh connectorA
             sh ./register_connector.sh connectorB

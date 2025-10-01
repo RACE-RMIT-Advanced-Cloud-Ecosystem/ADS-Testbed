@@ -10,7 +10,7 @@ usage() {
     echo "  daps      - CA, subCA and DAPS certificates only"
     echo "  broker    - Broker certificates and keystore only"
     echo "  combined  - DAPS + Broker (daps + broker)"
-    echo "  connector - Add new connector (requires connector name as second parameter)"
+    echo "  connector - Add new connector (requires connector name as second parameter, optional IP address as third parameter)"
     echo ""
     echo "Examples:"
     echo "  $0 full"
@@ -18,6 +18,7 @@ usage() {
     echo "  $0 broker"
     echo "  $0 combined"
     echo "  $0 connector connectorC"
+    echo "  $0 connector connectorC 192.168.1.100"
     exit 1
 }
 
@@ -37,13 +38,14 @@ case "$MODE" in
         ;;
 esac
 
-# For connector mode, validate connector name
+# For connector mode, validate connector name and optional IP
 if [ "$MODE" = "connector" ]; then
     if [ -z "$2" ]; then
         echo "ERROR: Connector name required for connector mode"
         usage
     fi
     CONNECTOR_NAME=$2
+    CONNECTOR_IP=$3  # Optional IP address
 fi
 
 echo "Starting certificate regeneration process in '$MODE' mode..."
@@ -188,6 +190,14 @@ add_connector() {
     # Check if configuration file exists, create if not
     if [ ! -f "$ROOT_DIR/CertificateAuthority/pkiInput/${CONNECTOR_NAME}.json" ]; then
         echo "Creating configuration file for $CONNECTOR_NAME"
+        
+        # Build hosts array with optional IP
+        HOSTS_JSON="[\n    \"localhost\",\n    \"${CONNECTOR_NAME,,}\",\n    \"127.0.0.1\""
+        if [ -n "$CONNECTOR_IP" ]; then
+            HOSTS_JSON="${HOSTS_JSON},\n    \"${CONNECTOR_IP}\""
+        fi
+        HOSTS_JSON="${HOSTS_JSON}\n  ]"
+        
         cat > "$ROOT_DIR/CertificateAuthority/pkiInput/${CONNECTOR_NAME}.json" <<EOF
 {
   "CN": "Connector ${CONNECTOR_NAME^^}",
@@ -206,7 +216,7 @@ add_connector() {
   "hosts": [
     "localhost",
     "${CONNECTOR_NAME,,}",
-    "127.0.0.1"
+    "127.0.0.1"$([ -n "$CONNECTOR_IP" ] && echo ",\n    \"$CONNECTOR_IP\"")
   ]
 }
 EOF

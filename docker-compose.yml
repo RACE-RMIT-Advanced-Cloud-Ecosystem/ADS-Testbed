@@ -193,6 +193,7 @@ services:
       - NODE_ENV=production
     volumes:
       - dashboard-data:/app/data
+      - ./init.json:/app/frontend/src/configurations/init.json
     networks:
       - local
 

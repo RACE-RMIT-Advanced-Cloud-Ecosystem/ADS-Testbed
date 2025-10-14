@@ -160,7 +160,6 @@ register_daps() {
     cd $ROOT_DIR/DAPS
     case "$MODE" in
         full)
-            echo "Registering clients with DAPS..."
             rm -f keys/clients/*.cert
             echo "---" > config/clients.yml
 
@@ -169,6 +168,8 @@ register_daps() {
             sh ./register_connector.sh connectorB
             ;;
         daps)
+            rm -f keys/clients/*.cert
+            echo "---" > config/clients.yml
             # DAPS only - no registration needed
             ;;
         broker)

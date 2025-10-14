@@ -2,6 +2,7 @@ services:
   omejdn:
     image: nginx:1.25.3
     container_name: omejdn
+    restart: unless-stopped
     ports:
       - 80:80
       - 443:443      
@@ -24,6 +25,7 @@ services:
   omejdn-server:
     image: ghcr.io/fraunhofer-aisec/omejdn-server:${OMEJDN_VERSION}
     container_name: omejdn-server
+    restart: unless-stopped
     environment:
       - OMEJDN_ISSUER=${OMEJDN_ISSUER}
       - OMEJDN_FRONT_URL=${OMEJDN_ISSUER}
@@ -41,6 +43,7 @@ services:
   omejdn-ui:
     image: ghcr.io/fraunhofer-aisec/omejdn-ui:${UI_VERSION}
     container_name: omejdn-ui
+    restart: unless-stopped
     environment:
       - OIDC_ISSUER=${OMEJDN_ISSUER}
       - API_URL=${OMEJDN_ISSUER}/api/v1
@@ -52,6 +55,7 @@ services:
   postgresa:
     image: postgres:13
     container_name: 'postgresa-container'
+    restart: unless-stopped
     ports:
       - "5432:5432"
     environment:
@@ -66,6 +70,7 @@ services:
   postgresb:
     image: postgres:13
     container_name: 'postgresb-container'
+    restart: unless-stopped
     ports:
       - "5433:5432"
     environment:
@@ -80,6 +85,7 @@ services:
   connectora:
     image: ghcr.io/international-data-spaces-association/dataspace-connector:8.0.2
     container_name: connectora
+    restart: unless-stopped
     ports:
       - 8080:8080
     environment:
@@ -113,6 +119,7 @@ services:
   connectorb:
     image: ghcr.io/international-data-spaces-association/dataspace-connector:8.0.2
     container_name: connectorb
+    restart: unless-stopped
     ports:
       - 8081:8081
     environment:
@@ -147,6 +154,7 @@ services:
   broker-reverseproxy:
     image: idstestbed/mdb-reverseproxy:5.0.3
     container_name: broker-reverseproxy
+    restart: unless-stopped
     volumes:
       - ./MetadataBroker/server.crt:/etc/cert/server.crt
       - ./MetadataBroker/server.key:/etc/cert/server.key
@@ -159,6 +167,7 @@ services:
   broker-core:
     image: idstestbed/metadatabroker-core:5.0.3
     container_name: broker-core
+    restart: unless-stopped
     volumes:
       - ./MetadataBroker/isstbroker-keystore.jks:/etc/cert/isstbroker-keystore.jks
       - ./DAPS/keys/TLS/daps.cert:/opt/java/openjdk/lib/security/daps.crt
@@ -179,6 +188,7 @@ services:
   broker-fuseki:
     image: idstestbed/mdb-fuseki:5.0.3
     container_name: broker-fuseki
+    restart: unless-stopped
     volumes:
       - broker-fuseki:/fuseki
     expose:
@@ -189,6 +199,7 @@ services:
   dashboard:
     image: public.ecr.aws/ads-poc/race-rmit-advanced-cloud-ecosystem_ads-dashboard
     container_name: dashboard
+    restart: unless-stopped
     environment:
       - NODE_ENV=production
     volumes:
@@ -200,6 +211,7 @@ services:
   rda-broker:
     image: public.ecr.aws/ads-poc/race-rmit-advanced-cloud-ecosystem_rda-broker:latest
     container_name: rda-broker
+    restart: unless-stopped
     environment:
       - NODE_ENV=production
     volumes:

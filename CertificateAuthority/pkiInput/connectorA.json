@@ -15,6 +15,7 @@
   "hosts": [
     "localhost",
     "connectora",
-    "127.0.0.1"
+    "127.0.0.1",
+    "omejdn"
   ]
 }
